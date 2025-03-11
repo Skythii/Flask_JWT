@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask  #Commentaire de mise à jour
 from flask import render_template
 from flask import json
 from flask import jsonify
