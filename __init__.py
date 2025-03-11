@@ -28,8 +28,7 @@ def login():
     if username != "test" or password != "test":
         return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
 
-    access_token = create_access_token(identity=username)
-    flask_jwt_extended.create_access_token(identity: user_identity_loader, fresh: false | float | timedelta = False, expires_delta: Literal[False] | timedelta | None = None, additional_claims=None, additional_headers=None)
+    access_token = create_access_token(identity=username, fresh: false | float | timedelta = False, expires_delta: Literal[False] | timedelta | None = None, additional_claims=None, additional_headers=None)
     return jsonify(access_token=access_token)
 
 
