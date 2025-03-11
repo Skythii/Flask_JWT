@@ -29,7 +29,7 @@ def login():
     if username != "test" or password != "test":
         return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
 
-    access_token = create_access_token(identity=username, fresh: timedelta = False, expires_delta: Literal[False])
+    access_token = create_access_token(identity=username, expires_delta: Literal[False])
     return jsonify(access_token=access_token)
 
 
