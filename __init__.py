@@ -37,8 +37,8 @@ def login():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
     role = request.json.get("role", "user")  # Récupération du rôle, par défaut "user"
-    if username != "test" or password != "test":
-        return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
+    if not username or not password:
+        return jsonify({"msg": "Nom d'utilisateur et mot de passe requis"}), 400
 
     access_token = create_access_token(identity=username, expires_delta=False)
     return jsonify(access_token=access_token)
