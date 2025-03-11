@@ -1,9 +1,16 @@
+from typing import Any
+from typing import Optional
+import jwt
 from flask import Flask  #Commentaire de mise à jour.
 from flask import render_template
 from flask import json
 from flask import jsonify
 from flask import request
 
+from flask_jwt_extended.config import config
+from flask_jwt_extended.internal_utils import get_jwt_manager
+from flask_jwt_extended.typing import ExpiresDelta
+from flask_jwt_extended.typing import Fresh
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
