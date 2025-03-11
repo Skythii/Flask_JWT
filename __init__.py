@@ -20,29 +20,35 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
                                                                                                                                        
-app = Flask(__name__)                                                                                                                  
-                                                                                                                                       
+app = Flask(__name__)
+
 # Configuration du module JWT
-app.config["JWT_SECRET_KEY"] = "Ma_clé_secrete"  # Ma clée privée
+app.config["JWT_SECRET_KEY"] = "Ma_clé_secrete"
 jwt = JWTManager(app)
 
 @app.route('/')
 def hello_world():
     return render_template('accueil.html')
 
-# Création d'une route qui vérifie l'utilisateur et retour un Jeton JWT si ok.
-# La fonction create_access_token() est utilisée pour générer un jeton JWT.
+@app.route('/')
+def hello_world():
+    return render_template('formulaire.html')
+
+# Création d'une route qui vérifie l'utilisateur et retourne un Jeton JWT si ok.
 @app.route("/login", methods=["POST"])
 def login():
-    username = request.json.get("username", None)
-    password = request.json.get("password", None)
-    role = request.json.get("role", "user")  # Récupération du rôle, par défaut "user"
+    username = request.form.get("username", None)
+    password = request.form.get("password", None)
+    role = request.form.get("role", "user")  # Récupération du rôle, par défaut "user"
+    
     if not username or not password:
         return jsonify({"msg": "Nom d'utilisateur et mot de passe requis"}), 400
 
-    access_token = create_access_token(identity=username, expires_delta=False)
-    return jsonify(access_token=access_token)
-
+    access_token = create_access_token(identity=username, additional_claims={"role": role}, expires_delta=False)
+    
+    response = make_response(jsonify({"msg": "Connexion réussie"}))
+    response.set_cookie("access_token", access_token, httponly=True)
+    return response
 
 # Route protégée par un jeton valide
 @app.route("/protected", methods=["GET"])
@@ -68,6 +74,6 @@ def role_required(required_role):
 @role_required("admin")
 def admin():
     return jsonify({"msg": "Bienvenue sur la page admin"}), 200
-                                                                                                               
+
 if __name__ == "__main__":
-  app.run(debug=True)
+    app.run(debug=True)
