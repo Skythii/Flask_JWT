@@ -39,13 +39,7 @@ def login():
         return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
 
     access_token = create_access_token(identity=username, expires_delta=False)
-    #def create_access_token(
-    #identity: username,
-    #fresh: Fresh = False,
-    #expires_delta: Optional[ExpiresDelta] = False,
-    #additional_claims=None,
-    #additional_headers=None,
-#)
+
     return jsonify(access_token=access_token)
 
 
