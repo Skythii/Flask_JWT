@@ -6,6 +6,8 @@ from flask import render_template
 from flask import json
 from flask import jsonify
 from flask import request
+from flask import g
+from flask import Response
 
 from flask_jwt_extended.config import config
 from flask_jwt_extended.internal_utils import get_jwt_manager
@@ -15,6 +17,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+
                                                                                                                                        
 app = Flask(__name__)                                                                                                                  
                                                                                                                                        
@@ -35,13 +38,13 @@ def login():
     if username != "test" or password != "test":
         return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
 
-    #access_token = create_access_token(identity=username, expires_delta: Literal[False])
-    def create_access_token(
-    identity: username,
-    fresh: Fresh = False,
-    expires_delta: Optional[ExpiresDelta] = False,
-    additional_claims=None,
-    additional_headers=None,
+    access_token = create_access_token(identity=username, expires_delta: False)
+    #def create_access_token(
+    #identity: username,
+    #fresh: Fresh = False,
+    #expires_delta: Optional[ExpiresDelta] = False,
+    #additional_claims=None,
+    #additional_headers=None,
 )
     return jsonify(access_token=access_token)
 
